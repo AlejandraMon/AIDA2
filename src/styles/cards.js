@@ -1,0 +1,205 @@
+import React from "react";
+import { StyleSheet } from "react-native";
+
+const stylescards = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#ffffff',
+    },
+    div: {
+        marginTop: 2,
+        marginHorizontal:20,
+        marginBottom:20,
+    },
+    containerC1: {
+        flexDirection: 'row',
+        height: 90,
+        backgroundColor: '#CD5C5C',
+        paddingHorizontal: 20,
+        paddingVertical: 20,
+        borderRadius: 5,
+        elevation: 5,
+        marginTop: 10,
+    },
+    icon: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    containerTextEnd: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        paddingHorizontal:30,
+    },
+    textBold: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    colorText: {
+        color: '#696969',
+    },
+    containerTextStart: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+    },
+    textBoldColor: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#000000',
+    },
+    containerC2: {
+        height: 110,
+        backgroundColor: '#f5f5f5',
+        paddingHorizontal: 20,
+        paddingVertical: 20,
+        borderRadius: 5,
+        elevation: 3,
+        marginTop: 10,
+    },
+    flex: {
+        flexDirection: 'row',
+        width: 330,
+    },
+    containerC3: {
+        flexDirection: 'row',
+        height: 90,
+        backgroundColor: '#ffffff',
+        borderRadius: 5,
+        elevation: 3,
+        marginTop: 10,
+    },
+    containerIcon: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 20,
+        backgroundColor: '#1e90ff',
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+    },
+    containerIcon1: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 20,
+        backgroundColor: '#ff1493',
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+    },
+    containerIcon2: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 20,
+        backgroundColor: '#008b8b',
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+    },
+    containerIcon3: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 20,
+        backgroundColor: '#3cb371',
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+    },
+    containerTextStart2: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        paddingHorizontal: 20,
+    },
+    containerC4: {
+        height: 100,
+        backgroundColor: '#ffffff',
+        borderRadius: 5,
+        elevation: 5,
+        marginTop: 10,
+    },
+    flex2: {
+        flexDirection: 'row',
+        marginTop: 20,
+    },
+    dashTitle:{
+        backgroundColor:'#ffffff', 
+        padding:2, 
+        marginHorizontal:20,
+        marginBottom:0, 
+        borderRadius: 5, 
+        flexDirection:'row',
+        
+    },
+    textTitle:{
+        fontSize:20, 
+        color:'#000000', 
+        paddingHorizontal:15,
+        paddingVertical:5, 
+        textAlign:'center', 
+    },
+    textTitle2:{
+        fontSize:18, 
+        color:'#000000', 
+        paddingHorizontal:15,
+        paddingVertical:5, 
+        textAlign:'center', 
+    },
+    text:{
+        fontFamily: 'arial',
+        fontSize: 18,
+        color: '#00008b',
+    },
+    table:{
+        backgroundColor: '#ffffff',
+        flex:1,
+        paddingHorizontal:20,
+        paddingVertical:10,
+        alignItems: 'center',
+        elevation:25,
+    },
+    listWrapper:{
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        borderBottomWidth: 0.5,
+        alignContent: 'center',
+    },
+    listWrapperTitle:{
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        borderBottomWidth: 0.5,
+        backgroundColor:'#1e90ff',  
+    },
+    row1:{
+        flex:1,
+        fontSize:16,
+        paddingHorizontal: 25,
+        paddingVertical:5,
+        color:'#ffffff',
+        fontWeight: 'bold'
+    },
+    row:{
+        flex:1,
+        fontSize:14,
+        paddingHorizontal: 25,
+        paddingVertical:5,
+    },
+    textUser:{
+        fontSize:18, 
+        color:'#000000', 
+        padding:15,
+        fontWeight:'bold',
+    },
+    containerUser:{
+        flexDirection:'row',
+        height: 70,
+        backgroundColor: '#fff',
+        paddingHorizontal:5,
+        paddingVertical: 5,
+        borderRadius: 5,
+        elevation: 2,
+        marginTop: 10,width:'100%',
+    }
+});
+
+export default stylescards;
