@@ -20,27 +20,27 @@ export default function App(){
   };
   const loginReducer = (prevState, action) => {
     switch( action.type ) {
-      case 'RETRIEVE_TOKEN': 
+      case 'RETRIEVE_TOKEN':
         return {
           ...prevState,
           userToken: action.token,
           isLoading: false,
         };
-      case 'LOGIN': 
+      case 'LOGIN':
         return {
           ...prevState,
           userName: action.id,
           userToken: action.token,
           isLoading: false,
         };
-      case 'LOGOUT': 
+      case 'LOGOUT':
         return {
           ...prevState,
           userName: null,
           userToken: null,
           isLoading: false,
         };
-      case 'REGISTER': 
+      case 'REGISTER':
         return {
           ...prevState,
           userName: action.id,
@@ -60,7 +60,7 @@ export default function App(){
       const id = foundUser[0].id;
       console.log(userName)
       console.log(id)
-      
+
       try {
         await AsyncStorage.setItem('userToken', userToken);
       } catch(e) {
@@ -86,7 +86,7 @@ export default function App(){
     toggleTheme: () => {
       setIsDarkTheme( isDarkTheme => !isDarkTheme );
     }
-    
+
   }), []);
 
   React.useEffect(() => {
@@ -130,7 +130,7 @@ export default function App(){
         </Drawer.Navigator>
       )
     :
-      <Router></Router>
+      <Router />
     }
     </NavigationContainer>
     </AuthContext.Provider>
