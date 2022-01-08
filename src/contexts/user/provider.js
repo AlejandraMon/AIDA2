@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { UserContext } from "./context";
 import { AsyncStorage } from "react-native";
 
-export function UserProvider({ value, children }) {
+export function UserProvider({ userInState, children }) {
   const [user, setUser] = useState(null);
 
   const loadUser = (user) => {
@@ -11,7 +11,9 @@ export function UserProvider({ value, children }) {
 
   useEffect(() => {
     const recoverUserFromStorage = async () => {
-      return await AsyncStorage.getItem("loggedUser")
+      const userInStorage = await AsyncStorage.getItem("loggedUser")
+      console.log({ userInStorage, userInState })
+      return userInStorage || userInState
     }
 
     recoverUserFromStorage()

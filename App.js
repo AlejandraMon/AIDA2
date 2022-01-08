@@ -115,7 +115,7 @@ export default function App(){
     <AuthContext.Provider value={authContext}>
     <NavigationContainer>
       { loginState.loggedUser !== null ? (
-        <UserProvider>
+        <UserProvider userInState={loginState?.loggedUser}>
           <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
             <Drawer.Screen name="Inicio" component={Dashboard} />
             <Drawer.Screen name="Detección de ECV" component={DetectionScreen} />
