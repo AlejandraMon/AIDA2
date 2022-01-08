@@ -55,31 +55,19 @@ export default function App(){
 
   const authContext = React.useMemo(() => ({
     signIn: async(loggedUser) => {
-      // setUserToken('fgkj');
-      // setIsLoading(false);
       const userName = loggedUser.username;
       const id = loggedUser.iduser;
       console.log(userName)
       console.log(id)
-
-      try {
-        await AsyncStorage.setItem('loggedUser', loggedUser);
-      } catch(e) {
-        console.log(e);
-      }
-      // console.log('user token: ', userToken);
       console.log("Should save on signIn", loggedUser)
       dispatch({ type: 'LOGIN', id: userName, loggedUser });
     },
     signOut: async() => {
-      // setUserToken(null);
-      // setIsLoading(false);
       try {
-        await AsyncStorage.removeItem('loggedUser');
+        dispatch({ type: 'LOGOUT' });
       } catch(e) {
-        console.log(e);
+        console.error(e);
       }
-      dispatch({ type: 'LOGOUT' });
     },
     signUp: () => {
       // setUserToken('fgkj');

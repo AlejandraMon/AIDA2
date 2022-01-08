@@ -25,6 +25,7 @@ const TableM = () => {
           error.message || "Ocurrió un error",
           [{text: 'Aceptar'}]
         );
+        setEquipo([])
         console.error(error);
       }
     }
@@ -87,6 +88,14 @@ const TableM = () => {
         w2 = null;
     }else{
         w = null;
+    }
+
+    if (!datos?.length) {
+      return (
+        <View style={stylescards.table}>
+          No hay datos
+        </View>
+      )
     }
 
     return (
