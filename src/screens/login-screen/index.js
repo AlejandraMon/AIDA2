@@ -6,7 +6,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { StatusBar } from "expo-status-bar";
 import { AuthContext } from "../../helpers/context";
-import Users from "../../services/users";
+import { UserService } from "../../services/users";
 
 
 export function Login({ navigation }) {
@@ -73,26 +73,32 @@ export function Login({ navigation }) {
         }
     }
 
-    const loginHandle = (user, password) => {
-        const foundUser = Users.filter(item => {
-            return user == item.username && password == item.password;
-        }
+    const validateInputs = () => {
+      if (data.user.length === 0 || data.password.length === 0) {
+        Alert.alert(
+          'Aviso',
+          'Nombre de usuario y contraseña no pueden quedar vacios',
+          [{ text: 'Reintentar' }]
         );
-        
+        return false;
+      }
 
-        if (data.user.length == 0 || data.password.length == 0) {
-            Alert.alert('Aviso', 'Nombre de usuario y contraseña no pueden quedar vacios', [
-                { text: 'Reintentar' }
-            ]);
-            return;
-        }
+      return true;
+    };
 
-        if (foundUser.length == 0) {
-            Alert.alert('Datos incorrectos', 'El usuario o la contraseña no son válidos', [
-                { text: 'Aceptar' }
-            ]);
-            return;
-        }
+    const loginHandle = async (user, password) => {
+      validateInputs()
+        const foundUser = await UserService
+          .login({ user, password });
+
+      if (foundUser.length === 0) {
+        Alert.alert(
+          'Datos incorrectos',
+          'El usuario o la contraseña no son válidos',
+          [{ text: 'Aceptar' }]
+        );
+        return;
+      }
 
         signIn(foundUser);
     }
@@ -171,9 +177,10 @@ export function Login({ navigation }) {
                 }
 
                 <View style={styles.button}>
-                    <TouchableOpacity style={styles.signIn}
-                        onPress={() => { loginHandle(data.user, data.password) }}>
-                        <Text style={styles.textSign}>Acceder</Text>
+                    <TouchableOpacity
+                      style={styles.signIn}
+                      onPress={() => { loginHandle(data.user, data.password) }}>
+                      <Text style={styles.textSign}>Acceder</Text>
                     </TouchableOpacity>
                 </View>
 
