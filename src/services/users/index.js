@@ -22,14 +22,26 @@ const users = [
     },
 ];
 
+async function getFullData(id) {
+  const response = await fetch(`http://192.168.8.34/API/usuario/consulta_id.php?iduser=${id}`)
+  return await response.json()
+}
+
 async function login({
   user,
   password
 }) {
   const response = await fetch(`http://192.168.8.34/API/usuario/login.php?username=${user}&pass=${password}`)
-  const responseJson = await response.json()
-  console.log({ responseJson });
-  return responseJson
+
+  const loginResponseJson = await response.json()
+  console.log({ loginResponseJson })
+  const userId = loginResponseJson.iduser;
+
+  const userWasFound = !!userId
+
+  if (!userWasFound) return null;
+
+  return await getFullData(userId)
 }
 
 

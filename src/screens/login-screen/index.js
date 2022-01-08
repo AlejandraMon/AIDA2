@@ -91,7 +91,9 @@ export function Login({ navigation }) {
         const foundUser = await UserService
           .login({ user, password });
 
-      if (foundUser.length === 0) {
+      console.log({ foundUser })
+
+      if (!foundUser) {
         Alert.alert(
           'Datos incorrectos',
           'El usuario o la contraseña no son válidos',

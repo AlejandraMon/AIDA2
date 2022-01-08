@@ -16,35 +16,35 @@ export default function App(){
   const initialLoginState = {
     isLoading: true,
     userName: null,
-    userToken: null,
+    loggedUser: null,
   };
   const loginReducer = (prevState, action) => {
     switch( action.type ) {
-      case 'RETRIEVE_TOKEN':
+      case 'RETRIEVE_USER':
         return {
           ...prevState,
-          userToken: action.token,
+          loggedUser: action.loggedUser,
           isLoading: false,
         };
       case 'LOGIN':
         return {
           ...prevState,
           userName: action.id,
-          userToken: action.token,
+          loggedUser: action.loggedUser,
           isLoading: false,
         };
       case 'LOGOUT':
         return {
           ...prevState,
           userName: null,
-          userToken: null,
+          loggedUser: null,
           isLoading: false,
         };
       case 'REGISTER':
         return {
           ...prevState,
           userName: action.id,
-          userToken: action.token,
+          loggedUser: action.loggedUser,
           isLoading: false,
         };
     }
@@ -52,28 +52,27 @@ export default function App(){
   const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
 
   const authContext = React.useMemo(() => ({
-    signIn: async(foundUser) => {
+    signIn: async(loggedUser) => {
       // setUserToken('fgkj');
       // setIsLoading(false);
-      const userToken = foundUser[0].userToken;
-      const userName = foundUser[0].username;
-      const id = foundUser[0].id;
+      const userName = loggedUser.username;
+      const id = loggedUser.iduser;
       console.log(userName)
       console.log(id)
 
       try {
-        await AsyncStorage.setItem('userToken', userToken);
+        await AsyncStorage.setItem('loggedUser', loggedUser);
       } catch(e) {
         console.log(e);
       }
       // console.log('user token: ', userToken);
-      dispatch({ type: 'LOGIN', id: userName, token: userToken });
+      dispatch({ type: 'LOGIN', id: userName, loggedUser });
     },
     signOut: async() => {
       // setUserToken(null);
       // setIsLoading(false);
       try {
-        await AsyncStorage.removeItem('userToken');
+        await AsyncStorage.removeItem('loggedUser');
       } catch(e) {
         console.log(e);
       }
@@ -92,15 +91,15 @@ export default function App(){
   React.useEffect(() => {
     setTimeout(async() => {
       // setIsLoading(false);
-      let userToken;
-      userToken = null;
+      let loggedUser;
+      loggedUser = null;
       try {
-        userToken = await AsyncStorage.getItem('userToken');
+        loggedUser = await AsyncStorage.getItem('loggedUser');
       } catch(e) {
         console.log(e);
       }
       // console.log('user token: ', userToken);
-      dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
+      dispatch({ type: 'RETRIEVE_USER', loggedUser });
     }, 1000);
   }, []);
 
@@ -114,7 +113,7 @@ export default function App(){
   return(
     <AuthContext.Provider value={authContext}>
     <NavigationContainer>
-      { loginState.userToken !== null ? (
+      { loginState.loggedUser !== null ? (
         <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
           <Drawer.Screen name="Inicio" component={Dashboard} />
           <Drawer.Screen name="Detección de ECV" component={DetectionScreen} />
