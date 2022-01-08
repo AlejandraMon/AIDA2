@@ -18,9 +18,9 @@ export function Dashboard() {
         <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
             <StatusBar backgroundColor="#1e90ff" barStyle="light-content"></StatusBar>
             <View style={stylescards.dashTitle}>
-                <UserData ></UserData>
+                <UserData />
             </View>
-            <Text style={stylescards.textTitle}>Datos físicos de {user?.name}</Text>
+            <Text style={stylescards.textTitle}>Datos físicos</Text>
             <WearData></WearData>
             <Text style={stylescards.textTitle}>Datos médicos</Text>
             <TableM></TableM>

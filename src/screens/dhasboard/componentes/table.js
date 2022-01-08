@@ -1,11 +1,14 @@
-import React from "react";
-import { FlatList, Text, View } from 'react-native';
+import React, { useContext } from "react";
+import { Alert, Text, View } from 'react-native';
 import stylescards from "../../../styles/cards";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { UserService } from "../../../services/users";
+import { UserContext } from "../../../contexts";
 
 const TableM = () => {
     //const {id} = useParams()
-    const id = 2;
+  const { user } = useContext(UserContext)
+
     const [datos, setEquipo] = React.useState([])
 
     React.useEffect(() => {
@@ -13,9 +16,17 @@ const TableM = () => {
     }, [])
 
     const obtenerDatos = async () => {
-        const data = await fetch(`http://eleazartech.0fees.us/api/manual/consult_iduser.php?iduser=${id}`)
-        const dataj = await data.json()
-        setEquipo(dataj)
+      try {
+        const medicData = await UserService.getMedicData(user?.id)
+        setEquipo(medicData)
+      } catch (error) {
+        Alert.alert(
+          'Error',
+          error.message || "Ocurrió un error",
+          [{text: 'Aceptar'}]
+        );
+        console.error(error);
+      }
     }
     //colesterol HDL
     let col = true;
@@ -107,7 +118,7 @@ const TableM = () => {
                             color="#ff0000"
                             size={28}
                         ></FontAwesome>
-                        }  
+                        }
                 </Text>
             </View>
             <View style={stylescards.listWrapper}>
@@ -132,7 +143,7 @@ const TableM = () => {
                             color="#ff0000"
                             size={28}
                         ></FontAwesome>
-                        }  
+                        }
                 </Text>
             </View>
             <View style={stylescards.listWrapper}>
@@ -157,7 +168,7 @@ const TableM = () => {
                             color="#ff0000"
                             size={28}
                         ></FontAwesome>
-                        }  
+                        }
                 </Text>
             </View>
             <View style={stylescards.listWrapper}>
@@ -182,7 +193,7 @@ const TableM = () => {
                             color="#ff0000"
                             size={28}
                         ></FontAwesome>
-                        }  
+                        }
                 </Text>
             </View>
             <View style={stylescards.listWrapper}>
@@ -207,7 +218,7 @@ const TableM = () => {
                             color="#ff0000"
                             size={28}
                         ></FontAwesome>
-                        }  
+                        }
                 </Text>
             </View>
         </View>
