@@ -28,6 +28,7 @@ export default function App(){
           isLoading: false,
         };
       case 'LOGIN':
+        console.log("LOGIN dispatched", action.loggedUser)
         return {
           ...prevState,
           userName: action.id,
@@ -67,6 +68,7 @@ export default function App(){
         console.log(e);
       }
       // console.log('user token: ', userToken);
+      console.log("Should save on signIn", loggedUser)
       dispatch({ type: 'LOGIN', id: userName, loggedUser });
     },
     signOut: async() => {

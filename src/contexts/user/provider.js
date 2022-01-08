@@ -12,13 +12,13 @@ export function UserProvider({ userInState, children }) {
   useEffect(() => {
     const recoverUserFromStorage = async () => {
       const userInStorage = await AsyncStorage.getItem("loggedUser")
-      console.log({ userInStorage, userInState })
+      console.log("Effect fired", userInState)
       return userInStorage || userInState
     }
 
     recoverUserFromStorage()
       .then(loggedUser => loadUser(loggedUser))
-  }, [])
+  }, [userInState])
 
   const providerValue = {
     user,

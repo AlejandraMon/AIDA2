@@ -13,11 +13,11 @@ const TableM = () => {
 
     React.useEffect(() => {
         obtenerDatos()
-    }, [])
+    }, [user])
 
     const obtenerDatos = async () => {
       try {
-        const medicData = await UserService.getMedicData(user?.id)
+        const medicData = await UserService.getMedicData(user?.iduser)
         setEquipo(medicData)
       } catch (error) {
         Alert.alert(
