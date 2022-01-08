@@ -12,6 +12,7 @@ const TableM = () => {
     const [datos, setEquipo] = React.useState([])
 
     React.useEffect(() => {
+        if(user === null) return 
         obtenerDatos()
     }, [user])
 
@@ -90,13 +91,7 @@ const TableM = () => {
         w = null;
     }
 
-    if (!datos?.length) {
-      return (
-        <View style={stylescards.table}>
-          No hay datos
-        </View>
-      )
-    }
+    
 
     return (
         <View style={stylescards.table}>

@@ -5,7 +5,7 @@
     "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "sdkVersion": "40.0.0",
+    "sdkVersion": "41.0.0",
     "splash": {
       "image": "./assets/dash.png",
       "resizeMode": "contain",
