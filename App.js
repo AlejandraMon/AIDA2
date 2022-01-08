@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import {DrawerContent} from './src/components/menu';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import AsyncStorage from 'react-native';
+import { UserProvider } from "./src/contexts";
 
 
 const Drawer = createDrawerNavigator();
@@ -16,35 +17,36 @@ export default function App(){
   const initialLoginState = {
     isLoading: true,
     userName: null,
-    userToken: null,
+    loggedUser: null,
   };
   const loginReducer = (prevState, action) => {
     switch( action.type ) {
-      case 'RETRIEVE_TOKEN': 
+      case 'RETRIEVE_USER':
         return {
           ...prevState,
-          userToken: action.token,
+          loggedUser: action.loggedUser,
           isLoading: false,
         };
-      case 'LOGIN': 
+      case 'LOGIN':
+        console.log("LOGIN dispatched", action.loggedUser)
         return {
           ...prevState,
           userName: action.id,
-          userToken: action.token,
+          loggedUser: action.loggedUser,
           isLoading: false,
         };
-      case 'LOGOUT': 
+      case 'LOGOUT':
         return {
           ...prevState,
           userName: null,
-          userToken: null,
+          loggedUser: null,
           isLoading: false,
         };
-      case 'REGISTER': 
+      case 'REGISTER':
         return {
           ...prevState,
           userName: action.id,
-          userToken: action.token,
+          loggedUser: action.loggedUser,
           isLoading: false,
         };
     }
@@ -52,32 +54,20 @@ export default function App(){
   const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
 
   const authContext = React.useMemo(() => ({
-    signIn: async(foundUser) => {
-      // setUserToken('fgkj');
-      // setIsLoading(false);
-      const userToken = foundUser[0].userToken;
-      const userName = foundUser[0].username;
-      const id = foundUser[0].id;
+    signIn: async(loggedUser) => {
+      const userName = loggedUser.username;
+      const id = loggedUser.iduser;
       console.log(userName)
       console.log(id)
-      
-      try {
-        await AsyncStorage.setItem('userToken', userToken);
-      } catch(e) {
-        console.log(e);
-      }
-      // console.log('user token: ', userToken);
-      dispatch({ type: 'LOGIN', id: userName, token: userToken });
+      console.log("Should save on signIn", loggedUser)
+      dispatch({ type: 'LOGIN', id: userName, loggedUser });
     },
     signOut: async() => {
-      // setUserToken(null);
-      // setIsLoading(false);
       try {
-        await AsyncStorage.removeItem('userToken');
+        dispatch({ type: 'LOGOUT' });
       } catch(e) {
-        console.log(e);
+        console.error(e);
       }
-      dispatch({ type: 'LOGOUT' });
     },
     signUp: () => {
       // setUserToken('fgkj');
@@ -86,21 +76,21 @@ export default function App(){
     toggleTheme: () => {
       setIsDarkTheme( isDarkTheme => !isDarkTheme );
     }
-    
+
   }), []);
 
   React.useEffect(() => {
     setTimeout(async() => {
       // setIsLoading(false);
-      let userToken;
-      userToken = null;
+      let loggedUser;
+      loggedUser = null;
       try {
-        userToken = await AsyncStorage.getItem('userToken');
+        loggedUser = await AsyncStorage.getItem('loggedUser');
       } catch(e) {
         console.log(e);
       }
       // console.log('user token: ', userToken);
-      dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
+      dispatch({ type: 'RETRIEVE_USER', loggedUser });
     }, 1000);
   }, []);
 
@@ -114,23 +104,25 @@ export default function App(){
   return(
     <AuthContext.Provider value={authContext}>
     <NavigationContainer>
-      { loginState.userToken !== null ? (
-        <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
-          <Drawer.Screen name="Inicio" component={Dashboard} />
-          <Drawer.Screen name="Detección de ECV" component={DetectionScreen} />
-          <Drawer.Screen name="Detección de arritmia" component={DetectionAScreen} />
-          <Drawer.Screen name="Detección de taquicardia" component={DetectionTScreen} />
-          <Drawer.Screen name="Datos" component={DataUser} />
-          <Drawer.Screen name="Perfil" component={ProfileScreen} />
-          <Drawer.Screen name="Resultados" component={ResultScreen} />
-          <Drawer.Screen name="Dispositivos" component={WearableScreen} />
-          <Drawer.Screen name="Sugerencias" component={SuggestionsScreen} />
-          <Drawer.Screen name="Editar perfil" component={EditProfileScreen} />
-          <Drawer.Screen name="Acerca de" component={InfoScreen} />
-        </Drawer.Navigator>
+      { loginState.loggedUser !== null ? (
+        <UserProvider userInState={loginState?.loggedUser}>
+          <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+            <Drawer.Screen name="Inicio" component={Dashboard} />
+            <Drawer.Screen name="Detección de ECV" component={DetectionScreen} />
+            <Drawer.Screen name="Detección de arritmia" component={DetectionAScreen} />
+            <Drawer.Screen name="Detección de taquicardia" component={DetectionTScreen} />
+            <Drawer.Screen name="Datos" component={DataUser} />
+            <Drawer.Screen name="Perfil" component={ProfileScreen} />
+            <Drawer.Screen name="Resultados" component={ResultScreen} />
+            <Drawer.Screen name="Dispositivos" component={WearableScreen} />
+            <Drawer.Screen name="Sugerencias" component={SuggestionsScreen} />
+            <Drawer.Screen name="Editar perfil" component={EditProfileScreen} />
+            <Drawer.Screen name="Acerca de" component={InfoScreen} />
+          </Drawer.Navigator>
+        </UserProvider>
       )
     :
-      <Router></Router>
+      <Router />
     }
     </NavigationContainer>
     </AuthContext.Provider>
