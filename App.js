@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import {DrawerContent} from './src/components/menu';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import AsyncStorage from 'react-native';
+import { UserProvider } from "./src/contexts";
 
 
 const Drawer = createDrawerNavigator();
@@ -114,19 +115,21 @@ export default function App(){
     <AuthContext.Provider value={authContext}>
     <NavigationContainer>
       { loginState.loggedUser !== null ? (
-        <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
-          <Drawer.Screen name="Inicio" component={Dashboard} />
-          <Drawer.Screen name="Detección de ECV" component={DetectionScreen} />
-          <Drawer.Screen name="Detección de arritmia" component={DetectionAScreen} />
-          <Drawer.Screen name="Detección de taquicardia" component={DetectionTScreen} />
-          <Drawer.Screen name="Datos" component={DataUser} />
-          <Drawer.Screen name="Perfil" component={ProfileScreen} />
-          <Drawer.Screen name="Resultados" component={ResultScreen} />
-          <Drawer.Screen name="Dispositivos" component={WearableScreen} />
-          <Drawer.Screen name="Sugerencias" component={SuggestionsScreen} />
-          <Drawer.Screen name="Editar perfil" component={EditProfileScreen} />
-          <Drawer.Screen name="Acerca de" component={InfoScreen} />
-        </Drawer.Navigator>
+        <UserProvider>
+          <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+            <Drawer.Screen name="Inicio" component={Dashboard} />
+            <Drawer.Screen name="Detección de ECV" component={DetectionScreen} />
+            <Drawer.Screen name="Detección de arritmia" component={DetectionAScreen} />
+            <Drawer.Screen name="Detección de taquicardia" component={DetectionTScreen} />
+            <Drawer.Screen name="Datos" component={DataUser} />
+            <Drawer.Screen name="Perfil" component={ProfileScreen} />
+            <Drawer.Screen name="Resultados" component={ResultScreen} />
+            <Drawer.Screen name="Dispositivos" component={WearableScreen} />
+            <Drawer.Screen name="Sugerencias" component={SuggestionsScreen} />
+            <Drawer.Screen name="Editar perfil" component={EditProfileScreen} />
+            <Drawer.Screen name="Acerca de" component={InfoScreen} />
+          </Drawer.Navigator>
+        </UserProvider>
       )
     :
       <Router />
